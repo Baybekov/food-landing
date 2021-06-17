@@ -368,10 +368,10 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     next.addEventListener('click', () => {
-        if (offset == (+width.slice(0, width.length - 2) * (slides.length - 1))) {
+        if (offset == (deleteNotDigits(width) * (slides.length - 1))) {
             offset = 0;
         } else {
-            offset += +width.slice(0, width.length - 2); 
+            offset += deleteNotDigits(width); 
         }
 
         slideTransform();
@@ -388,9 +388,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
     prev.addEventListener('click', () => {
         if (offset == 0) {
-            offset = +width.slice(0, width.length - 2) * (slides.length - 1);
+            offset = deleteNotDigits(width) * (slides.length - 1);
         } else {
-            offset -= +width.slice(0, width.length - 2);
+            offset -= deleteNotDigits(width);
         }
 
         slideTransform();
@@ -410,7 +410,7 @@ window.addEventListener('DOMContentLoaded', () => {
             const slideTo = e.target.getAttribute('data-slide-to');
 
             slideIndex = slideTo;
-            offset = +width.slice(0, width.length - 2) * (slideTo - 1);
+            offset = deleteNotDigits(width) * (slideTo - 1);
 
             slideTransform();
             counting();
@@ -435,6 +435,10 @@ window.addEventListener('DOMContentLoaded', () => {
 
     function slideTransform() {
         slidesField.style.transform = `translateX(-${offset}px)`;
+    }
+
+    function deleteNotDigits(str) {
+        return +str.replace(/\D/g, '');
     }
 
     // showSlides(slideIndex);
